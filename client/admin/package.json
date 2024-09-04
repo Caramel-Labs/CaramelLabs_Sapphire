@@ -10,11 +10,15 @@
   },
   "dependencies": {
     "@remixicon/react": "^4.2.0",
+    "cx": "^24.8.7",
     "react": "^18",
     "react-dom": "^18",
-    "recharts": "^2.12.7"
+    "recharts": "^2.12.7",
+    "tailwind-merge": "^2.5.2",
+    "tailwind-variants": "^0.2.1"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.8",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "next": "^14.2.7",
