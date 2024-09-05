@@ -1,7 +1,7 @@
 from providers.chat_models import GroqChatModel
-from contextualizers.hotels import get_hotel_information
-from reasoning.prompts import ToolBoundAgentPromptTemplate, ReActAgentPromptTemplate
-from contextualizers.experiences import get_experience_information
+from chat.contextualizers import get_hotel_information
+from chat.contextualizers import get_experience_information
+from chat.prompts import ToolBoundAgentPromptTemplate, ReActAgentPromptTemplate
 from langchain.agents import (
     AgentExecutor,
     create_react_agent,

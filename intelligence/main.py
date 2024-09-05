@@ -1,14 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers.chatbot import router as chatbot_router
-from routers.visa import router as visa_router
+from chat.routes import router as chat_router
+from visaguard.routes import router as visaguard_router
 
 # Instantiate FastAPI application
-app = FastAPI()
+app = FastAPI(
+    title="Sapphire Intelligence",
+    description="Sapphire Intelligence is the reasoning and cognitive aspect of Sapphire.",
+)
 
 # Setup routers
-app.include_router(chatbot_router)
-app.include_router(visa_router)
+app.include_router(chat_router)
+app.include_router(visaguard_router)
 
 # Define allowed origins for CORS
 origins = [
@@ -29,7 +32,7 @@ app.add_middleware(
 
 
 # Root route (to test service health)
-@app.get("/")
+@app.get("/", tags=["Sapphire Intelligence (Internals)"])
 async def root():
     return {
         "message": "Sapphire Intelligence is up and running.",

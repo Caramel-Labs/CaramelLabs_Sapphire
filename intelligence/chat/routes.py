@@ -1,11 +1,14 @@
 import langchain
 from fastapi import APIRouter
-from models.chatbot import ChatDataModel
+from chat.payloads import ChatDataModel
 from database.config import remote_mongodb
-from reasoning.agents import ToolBoundAgentBuilder
+from chat.agents import ToolBoundAgentBuilder
 
 # Setup chatbot router
-router = APIRouter(prefix="/chatbot")
+router = APIRouter(
+    prefix="/chat",
+    tags=["Sapphire Chat"],
+)
 
 # Setup database connection
 db = remote_mongodb()
@@ -23,7 +26,7 @@ langchain.debug = False
 @router.get("/ping")
 def test_router():
     return {
-        "message": "Chatbot router is up and running.",
+        "message": "Sapphire Chat router is up and running.",
     }
 
 
