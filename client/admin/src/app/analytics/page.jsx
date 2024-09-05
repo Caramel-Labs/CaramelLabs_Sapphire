@@ -2,7 +2,7 @@
 
 import  {AreaChart}  from "@/components/charts/areaChart"
 
-export default function Dashboard(){
+export default function Analytics(){
 
     const chartdata = [
         {
@@ -68,7 +68,7 @@ export default function Dashboard(){
       ]
     return(
         <div>
-            <h1>Dashboard</h1>
+            <h1>Analytics</h1>
             <AreaChart
                 className="h-80"
                 data={chartdata}

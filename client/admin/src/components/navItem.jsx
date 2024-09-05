@@ -1,9 +1,14 @@
-export default function NavItem({ emoji, text, isActive = false }) {
+import Link from 'next/link';
+
+export default function NavItem({ text, route }) {
     return (
-      <li className={`mb-2 p-2 rounded ${isActive ? 'bg-purple-100 text-purple-700' : 'text-gray-700 hover:bg-gray-100'}`}>
-        <span className="mr-2">{emoji}</span>
-        {text}
-      </li>
+        <li>
+            <Link href={route}>
+                <div className="flex items-center p-2 hover:bg-gray-100 rounded">
+                    <span className="mr-2"></span>
+                    <span>{text}</span>
+                </div>
+            </Link>
+        </li>
     );
-  }
-  
+}
