@@ -1,18 +1,18 @@
 import NavItem from "@/components/navItem";
 
 export default function Navbar() {
-    const navItem = [
+    const navItems = [
         {
-            emoji: '🏠',
-            text: 'Home'
+            text: 'Home',
+            route:'/home'
         },
         {
-            emoji: '📄',
-            text: 'Analytics'
+            text: 'Analytics',
+            route:'/analytics'
         },
         {
-            emoji: '📱',
             text: 'Sign out',
+            route:'/signout'
         }
     ];
 
@@ -23,8 +23,8 @@ export default function Navbar() {
                 Department of Immigration and Emigration
             </h2>
             <ul className="mt-8">
-                {navItem.map((item, index) => (
-                    <NavItem key={index} emoji={item.emoji} text={item.text} />
+                {navItems.map((item, index) => (
+                    <NavItem key={index} text={item.text} route={item.route} />
                 ))}
             </ul>
             <div className="mt-auto pt-4 border-t">

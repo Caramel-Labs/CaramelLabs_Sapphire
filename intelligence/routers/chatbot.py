@@ -1,3 +1,4 @@
+import langchain
 from fastapi import APIRouter
 from models.chatbot import ChatDataModel
 from database.config import remote_mongodb
@@ -8,6 +9,9 @@ router = APIRouter(prefix="/chatbot")
 
 # Setup database connection
 db = remote_mongodb()
+
+# Set LangChain runtime configurations
+langchain.debug = False
 
 
 # --------------------------------

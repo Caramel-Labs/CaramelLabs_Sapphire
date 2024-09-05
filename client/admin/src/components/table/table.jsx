@@ -1,15 +1,19 @@
-import TableHeader from "@/components/table/tableHeader"
-import TableRow from "@/components/table/tableRow"
+import TableHeader from "@/components/table/tableHeader";
+import TableRow from "@/components/table/tableRow";
 
-export default function Table() {
-    return(
-        <div className="bg-white shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
+export default function Table({ data }) {
+  return (
+    <div className="bg-white shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <table className="min-w-full divide-y divide-gray-200">
         <TableHeader />
+       {data &&
         <tbody className="bg-white divide-y divide-gray-200">
-        <TableRow  />
-      </tbody>
-    </table>
-  </div>
-    )
+          {data.map((rowData, index) => (
+            <TableRow key={index} data={rowData} />
+          ))}
+        </tbody>
+} 
+      </table>
+    </div>
+  );
 }
