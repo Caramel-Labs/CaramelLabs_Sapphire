@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const paymentSchema = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "Visa", required: true },
     amount: { type: Number, required: true },
     currency: { type: String, required: true },
     paymentStatus: {
