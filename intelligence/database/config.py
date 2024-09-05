@@ -24,3 +24,8 @@ def remote_mongodb():
     db = client.Sapphire
 
     return db
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass
