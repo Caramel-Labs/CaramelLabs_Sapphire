@@ -11,6 +11,7 @@ const experienceroutes = require("./routes/experienceroutes");
 const hotelRoutes = require("./routes/hotelRoutes");
 const searchRoute = require("../src/routes/searchRoute");
 const chatRoute = require("../src/routes/messageRoute");
+const emailRoute = require("../src/routes/emailRoute");
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.use("/api/experiences", experienceroutes);
 app.use("/api/hotels", hotelRoutes);
 app.use("/api/search", searchRoute);
 app.use("/api/chat", chatRoute);
+app.use("/api/email", emailRoute);
 
 module.exports = app;
