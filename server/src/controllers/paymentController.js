@@ -31,56 +31,37 @@ class PaymentController {
   }
 
   /**
-   * Handles payment success, verifies the PaymentIntent, and saves payment details
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
+   * Handles payment success, verifies the PaymentIntent, and saves payment details.
+   * @param {Object} req - Express request object containing userId, visaId, and paymentIntentId in the body.
+   * @param {Object} res - Express response object to send the status back to the client.
    */
   async handlePaymentStatus(req, res) {
     const { userId, visaId, paymentIntentId } = req.body;
 
     try {
-      console.log(
-        `Handling payment success for PaymentIntent ${paymentIntentId}`
-      );
+      // Validate input to ensure all necessary data is provided
+      if (!userId || !visaId || !paymentIntentId) {
+        console.warn(
+          "Missing required payment details: userId, visaId, or paymentIntentId."
+        );
+        return res
+          .status(400)
+          .json({ error: "Missing required payment details" });
+      }
 
-      // Retrieve the PaymentIntent from Stripe to verify the status
-      const paymentIntent = await stripe.paymentIntents.retrieve(
+      // Call PaymentService to save the payment details
+      const paymentResult = await PaymentService.savePaymentDetails(
+        userId,
+        visaId,
         paymentIntentId
       );
 
-      console.log(`PaymentIntent status: ${paymentIntent.status}`);
-
-      // Check if the payment was successful
-      if (paymentIntent.status === "succeeded") {
-        // Save payment details to the database
-        await PaymentService.savePaymentDetails(
-          userId,
-          visaId,
-          paymentIntent.amount,
-          paymentIntent.currency,
-          paymentIntentId,
-          "succeeded"
-        );
-
-        console.log(
-          `Payment successful, PaymentIntent ${paymentIntentId} details saved.`
-        );
-        res.redirect("/success");
-      } else {
-        // Save payment details to the database
-        await PaymentService.savePaymentDetails(
-          userId,
-          visaId,
-          paymentIntent.amount,
-          paymentIntent.currency,
-          paymentIntentId,
-          "failed"
-        );
-        console.warn(
-          `Payment failed for PaymentIntent ${paymentIntentId}. Status: ${paymentIntent.status}`
-        );
-        res.redirect("/failed");
-      }
+      console.log(
+        `PaymentIntent ${paymentIntentId} details saved for User ${userId} and Visa ${visaId}.`
+      );
+      res
+        .status(200)
+        .json({ message: "Payment details saved successfully", paymentResult });
     } catch (error) {
       console.error(
         `Error handling payment success for PaymentIntent ${paymentIntentId}: ${error.message}`

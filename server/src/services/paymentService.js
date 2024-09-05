@@ -42,19 +42,9 @@ class PaymentService {
    * Saves payment details in the database after payment processing
    * @param {String} userId - ID of the user who made the payment
    * @param {String} visaId - ID of the visa associated with the payment
-   * @param {Number} amount - Amount charged
-   * @param {String} currency - Currency used for payment
    * @param {String} paymentIntentId - Stripe PaymentIntent ID
-   * @param {String} paymentStatus - Status of the payment ('succeeded', 'pending', etc.)
    */
-  async savePaymentDetails(
-    userId,
-    visaId,
-    amount,
-    currency,
-    paymentIntentId,
-    paymentStatus
-  ) {
+  async savePaymentDetails(userId, visaId, paymentIntentId) {
     try {
       console.log(
         `Saving payment details for user ${userId} and visa ${visaId}`
@@ -64,10 +54,7 @@ class PaymentService {
       const payment = new Payment({
         userId,
         visaId,
-        amount,
-        currency,
         paymentIntentId,
-        paymentStatus,
       });
 
       // Save the payment record to the database
