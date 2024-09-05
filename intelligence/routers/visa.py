@@ -32,3 +32,8 @@ def get_response(data: VisaDataModel):
     return {
         "data": result,
     }
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass

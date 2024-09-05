@@ -31,3 +31,8 @@ def get_response(input: ChatDataModel):
     return {
         "data": response,
     }
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass
