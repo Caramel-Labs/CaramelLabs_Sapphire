@@ -6,10 +6,11 @@ const visaSchema = new Schema(
   {
     fullname: String,
     gender: String,
+    visaId: String,
     user: { type: Schema.Types.ObjectId, ref: "User" },
     dob: Date,
     birthPlace: String,
-    nationality: String,
+    nationality: { type: String, index: true },
     address: String,
     height: String,
     fathersName: String,
@@ -23,10 +24,13 @@ const visaSchema = new Schema(
       type: String,
       enum: ["valid", "inProgress", "rejected", "expired"],
       default: "inProgress",
+      index: true,
     },
   },
   { timestamps: true }
 );
+visaSchema.index({ visaStatus: 1, nationality: 1, createdAt: 1 });
+
 visaSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Visa", visaSchema);
