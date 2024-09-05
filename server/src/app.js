@@ -8,6 +8,7 @@ const paymentRoutes = require("./routes/paymentroutes");
 
 const placeRoutes = require("./routes/placeRoutes");
 const experienceroutes = require("./routes/experienceroutes");
+const hotelRoutes = require("./routes/hotelRoutes");
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use("/api/payment", paymentRoutes);
 
 app.use("/api/places", placeRoutes);
 app.use("/api/experiences", experienceroutes);
+app.use("/api/hotels", hotelRoutes);
 
 module.exports = app;
