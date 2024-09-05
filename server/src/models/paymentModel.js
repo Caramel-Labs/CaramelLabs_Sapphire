@@ -4,17 +4,8 @@ const Schema = mongoose.Schema;
 const paymentSchema = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    userId: { type: Schema.Types.ObjectId, ref: "Visa", required: true },
-    amount: { type: Number, required: true },
-    currency: { type: String, required: true },
-    paymentStatus: {
-      type: String,
-      enum: ["succeeded", "failed"],
-      required: true,
-    },
+    visaId: { type: String, required: true },
     paymentIntentId: { type: String, required: true },
-    card_id: { type: Schema.Types.ObjectId, ref: "Card" },
-    paymentType: String,
   },
   { timestamps: true }
 );
