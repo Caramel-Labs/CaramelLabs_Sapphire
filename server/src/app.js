@@ -6,6 +6,8 @@ const visaRoutes = require("./routes/visaRoutes");
 const interpolRoutes = require("./routes/interpolsearchroutes");
 const paymentRoutes = require("./routes/paymentroutes");
 
+const placeRoutes = require("./routes/placeRoutes");
+
 const app = express();
 
 // Connect to the database
@@ -19,5 +21,7 @@ app.use(cors({ origin: "*" }));
 app.use("/api/visa", visaRoutes);
 app.use("/api/interpol", interpolRoutes);
 app.use("/api/payment", paymentRoutes);
+
+app.use("/api/places", placeRoutes);
 
 module.exports = app;
