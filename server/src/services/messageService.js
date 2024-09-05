@@ -1,4 +1,4 @@
-const Message = require("../models/messageModel");
+const { MessageModel } = require("../models/messageModel");
 const axios = require("axios");
 
 class MessageService {
@@ -10,7 +10,7 @@ class MessageService {
   getAllMessages = async (user_id) => {
     try {
       console.log(`Fetching all messages for user: ${user_id}`);
-      const messages = await Message.find({ user: user_id });
+      const messages = await MessageModel.find({ user: user_id });
       console.log(`Found ${messages.length} message(s) for user: ${user_id}`);
       return messages;
     } catch (error) {
@@ -29,7 +29,7 @@ class MessageService {
   deleteAllMessages = async (user_id) => {
     try {
       console.log(`Deleting all messages for user: ${user_id}`);
-      const deletedMessages = await Message.deleteMany({ user: user_id });
+      const deletedMessages = await MessageModel.deleteMany({ user: user_id });
 
       if (deletedMessages.deletedCount > 0) {
         console.log(
@@ -66,7 +66,7 @@ class MessageService {
       console.log(`Creating user message for user: ${user_id}`);
 
       // Prepare user message for saving
-      const userMessageObj = new Message({
+      const userMessageObj = new MessageModel({
         isbot: false,
         content: userMessage,
         user: user_id,
@@ -75,7 +75,7 @@ class MessageService {
       // Prepare the input JSON for the external API call
       const inputJson = {
         content: userMessage,
-        username: user_id,
+        userId: user_id,
       };
       const sanitizedJson = this.removeInvisibleChars(inputJson);
       console.log(`Sending message to external API for user: ${user_id}`);
@@ -84,17 +84,17 @@ class MessageService {
       const [savedUserMessage, apiResponse] = await Promise.all([
         userMessageObj.save(),
         axios.post(
-          "https://loop-chatbot-caramel-labs.koyeb.app/chat-with-memory/",
+          `${process.env.INTELLIGENCE_URL}chat/get-response/`,
           sanitizedJson,
           { headers: { "Content-Type": "application/json" } }
         ),
       ]);
 
-      const responseText = apiResponse.data.response;
+      const responseText = apiResponse.data.data.output;
       console.log(`Received response from API: ${responseText}`);
 
       // Prepare bot message for saving
-      const botMessageObj = new Message({
+      const botMessageObj = new MessageModel({
         isbot: true,
         content: responseText,
         user: user_id,
@@ -107,11 +107,9 @@ class MessageService {
       return { responseText };
     } catch (error) {
       console.error(
-        `Error creating message and responding for user ${user_id}: ${error.message}`
+        `Error creating message and responding for user ${user_id}: ${error}`
       );
-      throw new Error(
-        "Error creating message and responding: " + error.message
-      );
+      throw new Error("Error creating message and responding: " + error);
     }
   };
 
