@@ -13,3 +13,8 @@ def hotel_individual_serial(hotel) -> dict:
 
 def hotel_list_serial(hotels) -> list:
     return (hotel_individual_serial(hotel) for hotel in hotels)
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass

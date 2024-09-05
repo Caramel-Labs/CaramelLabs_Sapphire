@@ -42,3 +42,8 @@ class OcrValidationParser(BaseOutputParser):
         )
 
         return parser
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass

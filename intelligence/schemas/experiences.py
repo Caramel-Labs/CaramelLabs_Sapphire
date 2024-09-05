@@ -13,3 +13,8 @@ def experience_individual_serial(experience) -> dict:
 
 def experience_list_serial(experiences) -> list:
     return (experience_individual_serial(experience) for experience in experiences)
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass

@@ -28,3 +28,8 @@ class OcrValidationResult(BaseModel):
     isValid: bool = Field(
         description="Whether the passport is valid (the details match).",
     )
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass

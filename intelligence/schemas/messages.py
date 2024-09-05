@@ -12,3 +12,8 @@ def message_individual_serial(message) -> dict:
 
 def message_list_serial(messages) -> list:
     return [message_individual_serial(message) for message in messages]
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass

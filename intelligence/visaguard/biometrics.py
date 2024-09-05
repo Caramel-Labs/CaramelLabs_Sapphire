@@ -12,3 +12,8 @@ class FaceExaminer:
             model_name=self.model_name,
         )
         return result
+
+
+# Make module safely exportable
+if __name__ == "__main__":
+    pass
