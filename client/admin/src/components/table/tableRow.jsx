@@ -1,17 +1,22 @@
+import formatDate from "@/lib/formatDate";
+
 export default function TableRow({ data }) {
-
-    return(
-        <tr className="bg-white">
+    // Helper function to format date
+   
+  
+    return (
+      <tr className="bg-white">
         <td className="px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center">
-            <div className="text-sm font-medium text-gray-900">Name</div>
-        </div>
+          <div className="flex items-center">
+            <div className="text-sm font-medium text-gray-900">{data.name}</div>
+          </div>
         </td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"> Application date</td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Nationality</td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Status</td>
-  </tr>
-
-    )
-    
-}
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          {formatDate(data.createdAt)} {/* Format and display the date */}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.nationality}</td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{data.visaStatus}</td>
+      </tr>
+    );
+  }
+  
