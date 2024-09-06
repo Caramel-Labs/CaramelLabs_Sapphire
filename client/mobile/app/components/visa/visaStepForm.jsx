@@ -19,17 +19,29 @@ export default function VisaStepForm() {
     const { step } = useFormState()
     switch (step) {
       case 0:
-        return <VisaCard />
-        return <FamilyDetails />
-      case 1: <VisaBeginner />
+        return <VisaBeginner />
+      case 1: 
         return <VisaRequirements />
-      case 2: <PaymentSelection/>
-        return <PersonalDetails/>
-      case 3: <PaymentSuccessful/>
-        return  
-      case 4: <BankDocumentUpload/>
-      case 5:<PassportUpload/>
-        return <PassportDetails/>
+      case 2: 
+        return <PersonalDetails />
+      case 3: 
+        return  <FamilyDetails />
+      case 4: 
+      return <PassportDetails />
+      case 5:
+        return <PassportUpload />
+      case 6:
+          return <PhotoUpload />  
+      case 7:   
+        return <BankDocumentUpload />
+      case 8:
+        return <PaymentSelection />
+      case 9:
+        return <CheckoutWrapper />
+      case 10:
+        return <PaymentSuccessful />  
+      case 11:
+        return <VisaCard />  
       default:
         return null
     }
