@@ -1,6 +1,7 @@
 'use client';
 
 import { AreaChart } from '@/components/charts/areaChart';
+import { DonutChart } from '@/components/charts/donutChart';
 import Navbar from '@/components/navbar';
 
 export default function Analytics() {
@@ -18,6 +19,42 @@ export default function Analytics() {
         { date: 'Nov 23', Accepted: 2954, Rejected: 3848 },
         { date: 'Dec 23', Accepted: 3239, Rejected: 3736 },
     ];
+
+    const data = {
+      "visaCountsByCountryCode": [
+          {
+              "count": 1500,
+              "countryCode": "American"
+          },
+          {
+              "count": 2000,
+              "countryCode": "India"
+          },
+          {
+              "count": 3500,
+              "countryCode": "Canada"
+          },
+          {
+              "count": 2800,
+              "countryCode": "India"
+          }
+      ],
+      "visaCountsByStatus": {
+          "acceptedVisaCount": 12000,
+          "rejectedVisaCount": 4500
+      },
+      "visaCountsByMonth": [
+          {
+              "month": "January",
+              "visaCount": 1100
+          },
+          {
+              "month": "February",
+              "visaCount": 2300
+          }
+      ]
+  }
+  
 
     return (
         <div className="flex h-screen bg-gray-100">
@@ -41,6 +78,20 @@ export default function Analytics() {
                         }
                         onValueChange={(v) => console.log(v)}
                     />
+
+                      <AreaChart
+                          className="h-80"
+                          data={data.visaCountsByMonth}
+                          index="month"
+                          categories={["visaCount"]}
+                          valueFormatter={(number) =>
+                            `$${Intl.NumberFormat("us").format(number).toString()}`
+                          }
+                          onValueChange={(v) => console.log(v)}
+                          xAxisLabel="Month"
+                          yAxisLabel="Spend Category"
+                          fill="solid"
+                        />    
                 </div>
             </div>
         </div>
