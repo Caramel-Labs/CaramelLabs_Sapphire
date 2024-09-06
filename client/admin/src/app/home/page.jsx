@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/navbar';
 import Header from '@/components/header';
 import Table from '@/components/table/table';
+import Spinner from '@/components/spinner';
 
 export default function Home() {
     const [data, setData] = useState(null);
@@ -31,7 +32,11 @@ export default function Home() {
     }, [selectedStatus]);
 
     if (loading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="flex items-center justify-center h-screen bg-white">
+                <Spinner />
+            </div>
+        );
     }
 
     return (

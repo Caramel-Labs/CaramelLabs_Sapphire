@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Navbar from '@/components/navbar';
 import Header from '@/components/header';
+import Spinner from '@/components/spinner';
 import PersonalDetails from '@/components/applicant/personalDetails';
 import FamilyDetails from '@/components/applicant/familyDetails';
 import Notices from '@/components/applicant/notices';
@@ -57,7 +58,11 @@ export default function Applicant() {
     }, [id]);
 
     if (!applicantData) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex items-center justify-center h-screen bg-white">
+                <Spinner />
+            </div>
+        );
     }
 
     if (applicantData) {
