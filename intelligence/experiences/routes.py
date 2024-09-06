@@ -1,10 +1,7 @@
 from fastapi import APIRouter
 from database.config import remote_mongodb
-from experiences.chains import ExperienceGenerationChain
 from experiences.payloads import PlaceList
-from experiences.prompts import ExperienceGenerationPromptTemplate
-from providers.chat_models import GroqChatModel
-from experiences.output_parsers import AiGeneratedExperienceParser
+from experiences.chains import ExperienceGenerationChain
 
 # Setup chatbot router
 router = APIRouter(
