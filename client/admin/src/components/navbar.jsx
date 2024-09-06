@@ -1,19 +1,19 @@
-import NavItem from "@/components/navItem";
+import NavItem from '@/components/navItem';
 
 export default function Navbar() {
     const navItems = [
         {
             text: 'Home',
-            route:'/home'
+            route: '/home',
         },
         {
             text: 'Analytics',
-            route:'/analytics'
+            route: '/analytics',
         },
         {
             text: 'Sign out',
-            route:'/signout'
-        }
+            route: '/signout',
+        },
     ];
 
     return (
@@ -34,9 +34,7 @@ export default function Navbar() {
                         <p className="font-semibold text-black">
                             Kalana Kariyawasam
                         </p>
-                        <p className="text-sm text-gray-500">
-                            kalana@gov.lk
-                        </p>
+                        <p className="text-sm text-gray-500">kalana@gov.lk</p>
                     </div>
                 </div>
             </div>
