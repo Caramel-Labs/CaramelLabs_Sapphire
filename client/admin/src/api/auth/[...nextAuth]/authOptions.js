@@ -11,7 +11,7 @@ const authOptions = {
             async authorize(credentials) {
                 console.log(credentials)
                 const credentialData = {
-                    email: credentials?.email,
+                    username: credentials?.email,
                     password: credentials?.password
                 }
                 console.log(credentialData)
@@ -37,11 +37,6 @@ const authOptions = {
     ],
 
     callbacks: {
-
-        async jwt({ token, user }) {
-            return { ...token, ...user }
-          },
-
         async session({ session, token, user }) {
             session.user = token
             return session;
