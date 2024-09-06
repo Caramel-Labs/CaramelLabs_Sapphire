@@ -10,10 +10,10 @@ export default function PersonalDetails() {
 
   // Create a new state object for personalData
   const [personalData, setPersonalData] = useState({
-    firstName: '',
+    forename: '',
     lastName: '',
     fullName: '',
-    gender: '',
+    sexId: '',
     dateOfBirth: '',
     placeOfBirth: '',
     currentNationality: '',
@@ -66,7 +66,7 @@ export default function PersonalDetails() {
           <input
             type="text"
             name="firstName"
-            value={personalData.firstName}
+            value={personalData.forename}
             onChange={handleInputChange}
             placeholder="Enter your first name"
             className="mt-2 block w-full border border-gray-300 rounded-[8px] shadow-sm p-2 text-xs h-[48px] text-black"
@@ -101,7 +101,7 @@ export default function PersonalDetails() {
           <label className="block text-xs font-medium text-gray-700">Gender</label>
           <select
             name="gender"
-            value={personalData.gender}
+            value={personalData.sexId}
             onChange={handleInputChange}
             className="mt-2 block w-full border border-gray-300 rounded-[8px] shadow-sm p-2 text-xs h-[48px] text-black bg-white"
             required
@@ -136,7 +136,7 @@ export default function PersonalDetails() {
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-700">Current nationality</label>
+          <label className="block text-xs font-medium text-gray-700">Current nationality(eg:EU)</label>
           <input
             type="text"
             name="currentNationality"

@@ -12,6 +12,10 @@ export default function PaymentSuccessful() {
     setLoading(true);
     setError(null);
 
+    setFormData({...formData, passportSizedPhoto : 'https://sapphire-assets.s3.ap-south-1.amazonaws.com/DNVSL0001-photo.PNG',
+      bankStatement: '', 
+      passportPhoto: 'https://sapphire-assets.s3.ap-south-1.amazonaws.com/DNVSL001-passport.webp'})
+
     try {
       const response = await fetch('http://localhost:4000/api/visa/', {
         method: 'POST',
