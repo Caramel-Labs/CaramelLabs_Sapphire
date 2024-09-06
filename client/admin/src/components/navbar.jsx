@@ -1,6 +1,6 @@
 import NavItem from '@/components/navItem';
 
-export default function Navbar() {
+export default function Navbar({ showUserSection = true }) {
     const navItems = [
         {
             text: 'Home',
@@ -27,17 +27,21 @@ export default function Navbar() {
                     <NavItem key={index} text={item.text} route={item.route} />
                 ))}
             </ul>
-            <div className="mt-auto pt-4 border-t">
-                <div className="flex items-center">
-                    <span className="mr-2">👤</span>
-                    <div>
-                        <p className="font-semibold text-black">
-                            Kalana Kariyawasam
-                        </p>
-                        <p className="text-sm text-gray-500">kalana@gov.lk</p>
+            {showUserSection && (
+                <div className="mt-auto pt-4 border-t">
+                    <div className="flex items-center">
+                        <span className="mr-2">👤</span>
+                        <div>
+                            <p className="font-semibold text-black">
+                                Kalana Kariyawasam
+                            </p>
+                            <p className="text-sm text-gray-500">
+                                kalana@gov.lk
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </nav>
     );
 }
