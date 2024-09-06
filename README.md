@@ -118,6 +118,8 @@ It is recommended to open this app in a <b>360 x 800</b> screen size.
 
 The admin dashboard will be opened in `localhost:3001` (if you started the admin dashboard server after the mobile web server).
 
+Detailed information and setup instructions can be found in the subfolders of this repository.
+
 ---
 
 Built with ❤️ by Caramel Labs.
