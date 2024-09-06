@@ -1,5 +1,5 @@
 from langchain_core.prompts import PromptTemplate
-from experiences.output_parsers import AiGeneratedExperienceParser
+from experience.output_parsers import AiGeneratedExperienceParser
 
 
 class ExperienceGenerationPromptTemplate:

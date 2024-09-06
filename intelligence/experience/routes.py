@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from database.config import remote_mongodb
-from experiences.payloads import PlaceList
-from experiences.chains import ExperienceGenerationChain
+from experience.payloads import PlaceList
+from experience.chains import ExperienceGenerationChain
 
 # Setup chatbot router
 router = APIRouter(

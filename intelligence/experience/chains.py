@@ -1,5 +1,5 @@
-from experiences.output_parsers import AiGeneratedExperienceParser
-from experiences.prompts import ExperienceGenerationPromptTemplate
+from experience.output_parsers import AiGeneratedExperienceParser
+from experience.prompts import ExperienceGenerationPromptTemplate
 from providers.chat_models import GroqChatModel
 
 
