@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const experienceService = require("../services/experiencesService");
-const { findNearbyHotelsforExperiences } = require("../utils/GoogleAPI");
+const userServices = require("../services/userServices");
 
 class ExperienceController {
   /**
@@ -27,26 +27,56 @@ class ExperienceController {
    */
   async getExperienceById(req, res, next) {
     try {
-      const { id } = req.params;
+      const { experienceId, userId } = req.query;
 
       // Validate if the provided ID is a valid MongoDB ObjectId
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        console.warn(`Invalid Experience ID: ${id}`);
-        return res.status(400).json({ error: "Invalid Experience ID" });
+      if (
+        !mongoose.Types.ObjectId.isValid(experienceId) ||
+        !mongoose.Types.ObjectId.isValid(userId)
+      ) {
+        console.warn(
+          `Invalid Experience ID: ${experienceId} or USER ID: ${userId}`
+        );
+        return res.status(400).json({ error: "Invalid Experience or USER ID" });
       }
 
-      console.log(`Fetching experience with ID: ${id}`);
+      console.log(
+        `Fetching experience with ID: ${experienceId} and user ID: ${userId}`
+      );
 
       // Fetch experience details
-      const experience = await experienceService.findExperienceById(id);
-      if (!experience) {
-        console.warn(`Experience not found for ID: ${id}`);
-        return res.status(404).json({ error: "Experience not found" });
+      const experience = await experienceService.findExperienceById(
+        experienceId
+      );
+
+      // Fetch user details
+      const user = await userServices.getUserById(userId);
+
+      if (!experience || !user) {
+        console.warn(
+          `Experience or user not found for ID: ${experienceId} or ${userId}`
+        );
+        return res.status(404).json({ error: "Experience or User not found" });
       }
 
-      // Fetch nearby hotels for the experience
-      const hotels = await findNearbyHotelsforExperiences(id);
-      res.status(200).json({ experience, hotels });
+      const bucketList = experience.bucketlist;
+      const userVisitedPlaces = user.userVisitedPlaces;
+
+      // Loop through the bucket list and add the isVisited field
+      const updatedBucketList = bucketList.map((place) => {
+        return {
+          ...place._doc, // Spread the original place object
+          isVisited: userVisitedPlaces.includes(place._id.toString()), // Check if the place ID exists in userVisitedPlaces
+        };
+      });
+
+      // Remove the bucketlist from the experience object
+      const { bucketlist, ...experienceWithoutBucketlist } = experience._doc;
+
+      // Send response with the updated experience and updated bucket list
+      res
+        .status(200)
+        .json({ experience: experienceWithoutBucketlist, updatedBucketList });
     } catch (error) {
       console.error(`Error fetching experience by ID: ${error.message}`);
       next(error); // Pass error to global error handler
