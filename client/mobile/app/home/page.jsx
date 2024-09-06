@@ -35,7 +35,7 @@ export default function Home() {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ facilityName: 'Co-working spaces' }),
+            body: JSON.stringify({ amenityName: 'Co-working spaces' }),
           };
           break;
         case 'Experience':

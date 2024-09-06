@@ -31,13 +31,17 @@ export default function Itinerary() {
   return (
     <div className="p-4 bg-white min-h-screen">
       <div className="text-black">
-        <h1 className="text-2xl font-semibold mb-4 mt-4">My Experiences</h1>
-        <p className="text-gray-600 mb-4 text-xs">
-          Experiences are collections of locations saved as bucket lists. This helps you keep track of places you visit while working in Sri Lanka.
-        </p>
-        <button className="w-full bg-[#00A388] text-white py-3 rounded-lg mb-6 text-xs font-semibold">
-          Create New Experience with AI
-        </button>
+      {experiences.length != 0 && (
+        <div>
+          <h1 className="text-2xl font-semibold mb-4 mt-4">My Experiences</h1>
+          <p className="text-gray-600 mb-4 text-xs">
+            Experiences are collections of locations saved as bucket lists. This helps you keep track of places you visit while working in Sri Lanka.
+          </p>
+          <button className="w-full bg-[#00A388] text-white py-3 rounded-lg mb-6 text-xs font-semibold">
+            Create New Experience with AI
+          </button>
+        </div>
+      )}
         {experiences.length === 0 ? (
           <ItineraryStarter />
         ) : (
