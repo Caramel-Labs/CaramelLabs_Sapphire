@@ -66,32 +66,34 @@ export default function Analytics() {
                     Analytics
                 </h1>
                 <div className="p-6">
+                    <h2 className="text-xl text-black font-semibold mb-4">Monthly Visa Approval and Rejection Trends</h2>
                     <AreaChart
                         className="h-80"
                         data={chartdata}
                         index="date"
                         categories={['Accepted', 'Rejected']}
                         valueFormatter={(number) =>
-                            `$${Intl.NumberFormat('us')
+                            `${Intl.NumberFormat('us')
                                 .format(number)
                                 .toString()}`
                         }
                         onValueChange={(v) => console.log(v)}
                     />
 
-                      <AreaChart
-                          className="h-80"
-                          data={data.visaCountsByMonth}
-                          index="month"
-                          categories={["visaCount"]}
-                          valueFormatter={(number) =>
-                            `$${Intl.NumberFormat("us").format(number).toString()}`
-                          }
-                          onValueChange={(v) => console.log(v)}
-                          xAxisLabel="Month"
-                          yAxisLabel="Spend Category"
-                          fill="solid"
-                        />    
+                    <h2 className="text-xl text-black font-semibold mt-10 mb-4">Visa Counts by Month</h2>
+                    <AreaChart
+                        className="h-80"
+                        data={data.visaCountsByMonth}
+                        index="month"
+                        categories={["visaCount"]}
+                        valueFormatter={(number) =>
+                            `${Intl.NumberFormat("us").format(number).toString()}`
+                        }
+                        onValueChange={(v) => console.log(v)}
+                        xAxisLabel="Month"
+                        yAxisLabel="Spend Category"
+                        fill="solid"
+                    />    
                 </div>
             </div>
         </div>
