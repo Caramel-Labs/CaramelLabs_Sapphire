@@ -1,5 +1,8 @@
 const VisaService = require("../services/visaService");
 const VisaAnalyticsService = require("../services/visaAnalyticService");
+const { validateImages } = require("../utils/verifications");
+const interpolSerchController = require("../controllers/interpolSearchController");
+const Visa = require("../models/visaModel");
 
 class VisaController {
   /**
@@ -163,6 +166,126 @@ class VisaController {
         .json({ error: "An error occurred while retrieving visa statistics." });
     }
   }
+
+  async validateVisa(req, res) {
+    try {
+      const { imageUrl1, imageUrl2, forename, name, nationality, sexId } =
+        req.body;
+
+      // Log incoming data
+      console.log("Received image URLs:", imageUrl1, imageUrl2);
+
+      // Check if both image URLs are provided
+      if (!imageUrl1 || !imageUrl2) {
+        return res.status(400).json({ error: "Both image URLs are required" });
+      }
+
+      // Call the service to validate the images
+      //const validationResponse = await validateImages(imageUrl1, imageUrl2);
+
+      // Handle response based on the boolean result
+      // if (!validationResponse.isValid) {
+      //   console.log("User details not validated");
+      //   return res.status(400).json({ error: "User details not validated" });
+      // }
+
+      // If validation is true, perform interpol search
+      console.log("User validated, performing interpol search...");
+      const result = await interpolSerchController.searchAllNotices(
+        forename,
+        name,
+        nationality,
+        sexId
+      );
+
+      // Extract notices from the result
+      const notices = extractNotices(result);
+      console.log("Notices extracted:", notices);
+
+      // Add notices to req.body
+      req.body.notices = notices;
+
+      // Now save the visa document with the updated req.body, including notices
+      const visa = await VisaService.createVisa(req.body);
+
+      // Respond with the created visa document
+      res
+        .status(201)
+        .json({ message: "Visa created successfully", data: visa });
+    } catch (error) {
+      console.error("Error in validateVisa controller:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
+  async updateVisaStatus(req, res) {
+    try {
+      const { id } = req.params;
+      const { visaStatus } = req.body;
+
+      // Validate that visaStatus is provided
+      if (!visaStatus) {
+        return res.status(400).json({ message: "Visa status is required." });
+      }
+
+      // Validate that visaStatus is one of the allowed values
+      const validStatuses = ["valid", "inProgress", "rejected", "expired"];
+      if (!validStatuses.includes(visaStatus)) {
+        return res.status(400).json({
+          message: `Visa status must be one of: ${validStatuses.join(", ")}`,
+        });
+      }
+
+      // Find the visa document by ID and update its visaStatus
+      const updatedVisa = await Visa.findByIdAndUpdate(
+        id,
+        { visaStatus },
+        { new: true } // Return the updated document
+      );
+
+      // If the visa document is not found, return a 404 error
+      if (!updatedVisa) {
+        return res.status(404).json({ message: "Visa document not found." });
+      }
+
+      // Respond with the updated visa document
+      res.json({
+        message: "Visa status updated successfully",
+        data: updatedVisa,
+      });
+    } catch (error) {
+      console.error("Error updating visa status:", error);
+      res
+        .status(500)
+        .json({ message: "Server error, failed to update visa status" });
+    }
+  }
 }
+
+const extractNotices = (noticeData) => {
+  const notices = [];
+  // Helper function to process each type of notice
+  const processNotices = (noticeArray, type) => {
+    noticeArray.forEach((notice) => {
+      notices.push({
+        entity_id: notice.entity_id,
+        type: type,
+      });
+    });
+  };
+  // Process red notices
+  if (noticeData.redNotices && noticeData.redNotices.length > 0) {
+    processNotices(noticeData.redNotices, "red");
+  }
+  // Process yellow notices
+  if (noticeData.yellowNotices && noticeData.yellowNotices.length > 0) {
+    processNotices(noticeData.yellowNotices, "yellow");
+  }
+  // Process UN notices
+  if (noticeData.unNotices && noticeData.unNotices.length > 0) {
+    processNotices(noticeData.unNotices, "un");
+  }
+  return notices;
+};
 
 module.exports = new VisaController();

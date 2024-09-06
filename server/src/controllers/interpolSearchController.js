@@ -75,20 +75,47 @@ const getAllNotices = async (req, res) => {
  * @param {Object} res - Express response object
  */
 const searchNotices = async (req, res) => {
-  const { forename, name } = req.query;
+  const { forename, name, nationality, sexId } = req.query;
 
+  try {
+    // Call searchAllNotices and await the results
+    const processedNotices = await searchAllNotices(
+      forename,
+      name,
+      nationality,
+      sexId
+    );
+
+    // Send the response with the processed notices
+    res.status(200).json(processedNotices);
+  } catch (error) {
+    // If any error occurs, send an appropriate error message
+    console.error("Error in searchNotices controller:", error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+const searchAllNotices = async (forename, name, nationality, sexId) => {
   // Validate query parameters
   if (!forename || !name) {
     console.warn("Missing required query parameters: forename or name");
-    return res.status(400).json({ message: "Forename and name are required." });
+    throw new Error("Forename and name are required.");
   }
 
   try {
+    console.log(
+      `Searching notices for: ${forename} ${name} (${nationality}, ${sexId})`
+    );
+
     // Fetch notices concurrently for better performance
     const [redNotices, yellowNotices, unNotices] = await Promise.all([
-      interpolSearchService.getRedNotices(forename, name),
-      interpolSearchService.getYellowNotices(forename, name),
-      interpolSearchService.getUnNotices(forename, name),
+      interpolSearchService.getRedNotices(forename, name, nationality, sexId),
+      interpolSearchService.getYellowNotices(
+        forename,
+        name,
+        nationality,
+        sexId
+      ),
+      interpolSearchService.getUnNotices(forename, name, nationality, sexId),
     ]);
 
     // Consolidate fetched notices
@@ -116,15 +143,14 @@ const searchNotices = async (req, res) => {
       ...notices.unNotices.map((notice) => processNotice(notice, "un")),
     ]);
 
-    // Respond with the processed notices
-    res.json(processedNotices);
+    // Return the processed notices
     console.log(
-      "Successfully processed and retrieved notices:",
-      processedNotices.length
+      `Successfully processed ${processedNotices.length} notices for: ${forename} ${name}`
     );
+    return notices;
   } catch (error) {
     console.error("Error processing notices:", error);
-    res.status(500).json({ message: "Failed to retrieve and process notices" });
+    throw new Error("Failed to retrieve and process notices");
   }
 };
 
@@ -134,4 +160,5 @@ module.exports = {
   getUnNotices,
   getAllNotices,
   searchNotices,
+  searchAllNotices,
 };

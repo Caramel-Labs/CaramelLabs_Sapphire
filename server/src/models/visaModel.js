@@ -28,9 +28,12 @@ const visaSchema = new Schema(
       default: "inProgress",
       index: true,
     },
-    redNotice: [{ String }],
-    yellowNotice: [{ String }],
-    unNotice: [{ String }],
+    notices: [
+      {
+        entity_id: { type: String, required: true },
+        type: { type: String, enum: ["red", "yellow", "un"], required: true },
+      },
+    ],
   },
   { timestamps: true }
 );
