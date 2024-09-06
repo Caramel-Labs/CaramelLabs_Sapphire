@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from chat.routes import router as chat_router
 from visaguard.routes import router as visaguard_router
-from experiences.routes import router as experience_router
+from experience.routes import router as experience_router
 
 # Set LangChain runtime configurations
 langchain.debug = False

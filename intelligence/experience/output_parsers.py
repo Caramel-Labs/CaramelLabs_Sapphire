@@ -2,7 +2,7 @@
 """
 
 from abc import ABC, abstractmethod
-from experiences.data_models import ExperienceMetadata
+from experience.data_models import ExperienceMetadata
 from langchain.output_parsers import PydanticOutputParser
 
 
