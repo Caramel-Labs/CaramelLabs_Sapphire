@@ -99,6 +99,86 @@ const findNearbyHotelsforExperiences = async (experienceId) => {
 };
 
 /**
+ * Finds nearby Places within a 10 km radius of a given experience using MongoDB geospatial queries.
+ * @param {coordinates} longitude
+ * @param {coordinates} latitude
+ * @returns {Array} - List of nearby Places.
+ */
+const findNearbyPlaces = async (longitude, latitude) => {
+  try {
+    if (!longitude || !latitude) {
+      throw new Error("Longitude and latitude are required");
+    }
+
+    console.log(
+      `Finding nearby places for coordinates: [${longitude}, ${latitude}]`
+    );
+
+    const nearbyPlaces = await Place.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+          $maxDistance: 10000, // Distance in meters (10 km)
+        },
+      },
+    }).lean(); // Optional: Use `lean()` to get plain JavaScript objects
+
+    console.log(
+      `Found ${nearbyPlaces.length} places near the given coordinates`
+    );
+
+    // console.log(places);
+    return nearbyPlaces;
+  } catch (error) {
+    console.error(`Error finding nearby places: ${error.message}`);
+    throw new Error("Failed to find nearby places");
+  }
+};
+
+/**
+ * Finds nearby Places within a 10 km radius of a given experience using MongoDB geospatial queries.
+ * @param {coordinates} longitude
+ * @param {coordinates} latitude
+ * @returns {Array} - List of nearby Places.
+ */
+const findNearbyHotelsByCoordinates = async (longitude, latitude) => {
+  try {
+    if (!longitude || !latitude) {
+      throw new Error("Longitude and latitude are required");
+    }
+
+    console.log(
+      `Finding nearby places for coordinates: [${longitude}, ${latitude}]`
+    );
+
+    const nearbyHotels = await Hotel.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+          $maxDistance: 10000, // Distance in meters (10 km)
+        },
+      },
+    }).lean();
+
+    console.log(
+      `Found ${nearbyHotels.length} Hotels near the given coordinates`
+    );
+
+    // console.log(places);
+    return nearbyHotels;
+  } catch (error) {
+    console.error(`Error finding nearby places: ${error.message}`);
+    throw new Error("Failed to find nearby places");
+  }
+};
+
+/**
  * Fetches the formatted address of a given place by using its coordinates (longitude, latitude).
  * Uses the Google Geocoding API to convert coordinates into an address.
  * @param {String} placeId - ID of the place to retrieve the address for.
@@ -138,4 +218,6 @@ module.exports = {
   findNearbyHotels,
   getAddressFromCoordinates,
   findNearbyHotelsforExperiences,
+  findNearbyPlaces,
+  findNearbyHotelsByCoordinates,
 };

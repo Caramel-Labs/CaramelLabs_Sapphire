@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const experienceSchema = new Schema({
   name: { type: String, required: true },
+  oneliner: String,
   imgUrl: String,
   description: String,
   location: {
@@ -17,9 +18,6 @@ const experienceSchema = new Schema({
     },
   ],
   aiGenerated: Boolean,
-  duration: String,
-  cost: String,
-  reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
 });
 
 module.exports = mongoose.model("Experiences", experienceSchema);
