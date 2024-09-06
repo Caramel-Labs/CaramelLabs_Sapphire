@@ -7,6 +7,8 @@ const visaSchema = new Schema(
     fullname: String,
     gender: String,
     visaId: String,
+    passportPhotoUrl: String,
+    passportSizePhotoUrl: String,
     user: { type: Schema.Types.ObjectId, ref: "User" },
     dob: Date,
     birthPlace: String,
@@ -26,6 +28,9 @@ const visaSchema = new Schema(
       default: "inProgress",
       index: true,
     },
+    redNotice: [{ String }],
+    yellowNotice: [{ String }],
+    unNotice: [{ String }],
   },
   { timestamps: true }
 );
