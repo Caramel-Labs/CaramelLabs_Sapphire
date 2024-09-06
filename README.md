@@ -32,6 +32,12 @@ To setup the mobile web frontend of the Sapphire application, navigate to the `c
 cd client/mobile
 ```
 
+Create a `.env.local` file within the root folder with the following content:
+
+```shell
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="your-api-key"
+```
+
 Install the required packages:
 
 ```shell
@@ -72,6 +78,22 @@ To setup the server of the Sapphire application, navigate to the `server` folder
 cd server
 ```
 
+Create a `.env` file within the root folder with the following content:
+
+```shell
+MONGO_URI = your-api-key
+PORT = 4000
+
+GOOGLE_API_KEY = your-api-key
+OPEN_WEATHER_API = your-api-key
+STRIPE_SECRET_KEY = your-stripe-secret-key
+
+EMAIL_USER = youremail@example.com
+EMAIL_PASS = your-email-passkey
+
+INTELLIGENCE_URL = https://sapphire.koyeb.app/
+```
+
 Install the required packages:
 
 ```shell
@@ -98,6 +120,23 @@ To setup Sapphire Intelligence, navigate to the `intelligence` folder from the r
 cd intelligence
 ```
 
+Create a `.env` file within the root folder with the following content:
+
+```shell
+GROQ_API_KEY = "your-api-key"
+COHERE_API_KEY = "your-api-key"
+MONGO_URI_STRING = "your-mongo-uri"
+```
+
+To connect to LangSmith for observability, add the following content too:
+
+```shell
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
+LANGCHAIN_API_KEY="your-api-key"
+LANGCHAIN_PROJECT="default"
+```
+
 Install the required packages:
 
 ```shell
@@ -117,8 +156,6 @@ After the above steps have been completed, open up `localhost:3000` in the brows
 It is recommended to open this app in a <b>360 x 800</b> screen size.
 
 The admin dashboard will be opened in `localhost:3001` (if you started the admin dashboard server after the mobile web server).
-
-Detailed information and setup instructions can be found in the subfolders of this repository.
 
 ---
 
