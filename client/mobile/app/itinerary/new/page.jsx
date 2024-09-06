@@ -10,7 +10,7 @@ const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 export default function NewItinerary() {
     const [searchTerm, setSearchTerm] = useState('');
     const router = useRouter();
-    const userId = '66d1fba57c2ac1b30482e2b2'; // Keep userId as it is
+    const userId = '66d1fba57c2ac1b30482e2b2';
 
     const handleContinue = async () => {
         try {
