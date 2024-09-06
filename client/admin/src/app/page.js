@@ -1,6 +1,31 @@
+'use client'
+
+import { useState } from 'react';
 import Navbar from '@/components/navbar';
 
+
 export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const handleSubmit = async () => {
+        const result = await signIn("credentials", {
+          email,
+          password,
+          redirect: true,
+          callbackUrl: "/home",
+        });
+      };
+    
+
     return (
         <div className="bg-gray-100">
             <Navbar showUserSection={false} />
@@ -9,7 +34,7 @@ export default function Login() {
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
                         Log in to Sapphire Visa Console
                     </h2>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <label
                                 htmlFor="email"
@@ -20,6 +45,8 @@ export default function Login() {
                             <input
                                 type="email"
                                 id="email"
+                                value={email}
+                                onChange={handleEmailChange}
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
                                 placeholder="Email"
                                 required
@@ -35,6 +62,8 @@ export default function Login() {
                             <input
                                 type="password"
                                 id="password"
+                                value={password}
+                                onChange={handlePasswordChange}
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
                                 placeholder="Password"
                                 required
@@ -42,6 +71,7 @@ export default function Login() {
                         </div>
                         <button
                             type="submit"
+                            onClick={handleSubmit}
                             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
                         >
                             Sign In
@@ -51,4 +81,6 @@ export default function Login() {
             </div>
         </div>
     );
-}
+};
+
+
