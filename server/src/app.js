@@ -12,6 +12,7 @@ const hotelRoutes = require("./routes/hotelRoutes");
 const searchRoute = require("../src/routes/searchRoute");
 const chatRoute = require("../src/routes/messageRoute");
 const emailRoute = require("../src/routes/emailRoute");
+const userRoute = require("../src/routes/userRoutes");
 
 const app = express();
 
@@ -33,5 +34,6 @@ app.use("/api/hotels", hotelRoutes);
 app.use("/api/search", searchRoute);
 app.use("/api/chat", chatRoute);
 app.use("/api/email", emailRoute);
+app.use("/api/user", userRoute);
 
 module.exports = app;

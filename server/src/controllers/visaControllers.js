@@ -1,4 +1,5 @@
 const VisaService = require("../services/visaService");
+const VisaAnalyticsService = require("../services/visaAnalyticService");
 
 class VisaController {
   /**
@@ -84,6 +85,82 @@ class VisaController {
     } catch (error) {
       console.error("Error retrieving all visas:", error);
       res.status(500).json({ message: error.message });
+    }
+  }
+
+  /**
+   * Controller to handle the request to generate a new Visa ID
+   * @param {Object} req - The request object
+   * @param {Object} res - The response object
+   */
+  async generateVisaId(req, res) {
+    try {
+      console.log("Received request to generate a new Visa ID");
+
+      // Call the service to generate the Visa ID
+      const visaId = await VisaService.generateVisaId();
+
+      console.log(`Visa ID generated successfully: ${visaId}`);
+
+      // Respond with the generated Visa ID
+      res.status(200).json({
+        success: true,
+        visaId: visaId,
+      });
+    } catch (error) {
+      console.error("Error generating Visa ID:", error.message);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+      });
+    }
+  }
+  /**
+   * Controller function to retrieve visa statistics by executing multiple service functions in parallel.
+   *
+   * @param {Object} req - The request object containing query parameters.
+   * @param {Object} res - The response object used to send the response.
+   */
+  async getVisaStatistics(req, res) {
+    try {
+      const { year, status } = req.query; // Extract year and status from query parameters
+
+      // Log the incoming request details
+      console.log(
+        `Received request to get visa statistics for year ${year} and status ${status}...`
+      );
+
+      // Validate input parameters
+      if (!year || !status) {
+        return res
+          .status(400)
+          .json({ error: "Year and status are required parameters." });
+      }
+
+      // Execute all service functions in parallel
+      const [visaCountsByCountryCode, visaCountsByStatus, visaCountsByMonth] =
+        await Promise.all([
+          VisaAnalyticsService.getVisaCountsByCountryCode(parseInt(year)), // Ensure year is an integer
+          VisaAnalyticsService.getVisaCountsByStatus(parseInt(year), status), // Ensure year is an integer
+          VisaAnalyticsService.getVisaCountsByMonth(parseInt(year), status), // Ensure year is an integer
+        ]);
+
+      // Log the results of the service functions
+      console.log("Visa counts by country code:", visaCountsByCountryCode);
+      console.log("Visa counts by status:", visaCountsByStatus);
+      console.log("Visa counts by month:", visaCountsByMonth);
+
+      // Send the aggregated results in the response
+      res.status(200).json({
+        visaCountsByCountryCode,
+        visaCountsByStatus,
+        visaCountsByMonth,
+      });
+    } catch (error) {
+      console.error("Error retrieving visa statistics:", error.message);
+      res
+        .status(500)
+        .json({ error: "An error occurred while retrieving visa statistics." });
     }
   }
 }

@@ -14,6 +14,10 @@ router.get("/", VisaController.getFilteredVisas);
 // Example: GET /api/visas/all?page=1&limit=10
 router.get("/all", VisaController.getAllVisas);
 
+router.get("/visa-statistics", VisaController.getVisaStatistics);
+
+router.get("/generateVisaId", VisaController.generateVisaId);
+
 // Route to update a visa by user ID
 router.patch("/:userId", VisaController.updateVisa);
 

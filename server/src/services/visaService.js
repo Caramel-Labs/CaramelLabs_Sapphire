@@ -84,6 +84,51 @@ class VisaService {
     console.log("Visas retrieved with pagination successfully:", visas);
     return visas;
   }
+
+  /**
+   * Generates a new unique Visa ID in the format 'DNVSL00001'.
+   * The ID is auto-incremented based on the last visa document stored in the database.
+   *
+   * @returns {Promise<string>} - The newly generated Visa ID
+   * @throws {Error} - Throws an error if there is an issue generating the Visa ID
+   */
+  async generateVisaId() {
+    try {
+      console.log("Starting process to generate new Visa ID...");
+
+      // Fetch the last visa document from the database, sorted by the latest ID (_id) in descending order
+      const lastVisa = await Visa.findOne().sort({ _id: -1 });
+
+      let newIdNumber;
+
+      if (lastVisa) {
+        // If a visa document is found, extract its visaId
+        const lastVisaId = lastVisa.visaId;
+        console.log(`Last Visa ID found in database: ${lastVisaId}`);
+
+        // Extract the numeric part of the last Visa ID (ignoring the "DNVSL" prefix)
+        const numericPart = parseInt(lastVisaId.substring(5));
+        console.log(`Numeric part of last Visa ID: ${numericPart}`);
+
+        // Increment the numeric part to generate the next ID number
+        newIdNumber = numericPart + 1;
+      } else {
+        // If no visa document is found, start with ID number 1
+        console.log("No previous Visa ID found, starting from 1.");
+        newIdNumber = 1;
+      }
+
+      // Construct the new Visa ID, ensuring the numeric part is padded to 5 digits
+      const newVisaId = `DNVSL${newIdNumber.toString().padStart(5, "0")}`;
+      console.log(`New Visa ID generated: ${newVisaId}`);
+
+      return newVisaId;
+    } catch (error) {
+      // Log and rethrow any error that occurs during the process
+      console.error("Error generating Visa ID:", error.message);
+      throw new Error("Error generating Visa ID");
+    }
+  }
 }
 
 module.exports = new VisaService();

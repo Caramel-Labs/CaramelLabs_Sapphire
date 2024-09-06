@@ -9,6 +9,7 @@ const userSchema = new Schema({
   cards: [{ type: Schema.Types.ObjectId, ref: "Card" }],
   interests: [{ type: Schema.Types.ObjectId, ref: "Interest" }],
   userExperiences: [{ type: Schema.Types.ObjectId, ref: "Experiences" }],
+  userVisitedPlaces: [{ type: Schema.Types.ObjectId, ref: "Place" }],
 });
 
 module.exports = mongoose.model("User", userSchema);
