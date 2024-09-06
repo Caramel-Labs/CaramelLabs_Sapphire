@@ -1,4 +1,3 @@
-from langchain_core.prompts import PromptTemplate
 from providers.chat_models import GroqChatModel
 from visaguard.output_parsers import OcrStructuringParser, OcrValidationParser
 from visaguard.prompts import OcrStructuringPromptTemplate, OcrValidationPromptTemplate
