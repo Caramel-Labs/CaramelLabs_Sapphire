@@ -2,7 +2,7 @@
 
 *The Digital Nomad's Guide to Sri Lanka.*
 
-This repository contains code related to the **Sapphire** application.
+This repository contains the code related to the **Sapphire** application.
 
 ## Setup
 
@@ -151,11 +151,11 @@ fastapi dev main.py
 
 ---
 
-After the above steps have been completed, open up `localhost:3000` in the browser to view the Sapphire mobile web app.
+After the above steps have been completed, open up `localhost:3000/home` in the browser to view the Sapphire mobile web app.
 
 It is recommended to open this app in a <b>360 x 800</b> screen size.
 
-The admin dashboard will be opened in `localhost:3001` (if you started the admin dashboard server after the mobile web server).
+The admin dashboard will be opened in `localhost:3001/home` (if you started the admin dashboard server after the mobile web server).
 
 ---
 
