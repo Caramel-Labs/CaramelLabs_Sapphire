@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Navbar from '@/components/navbar';
-
+import { signIn } from "next-auth/react";
 
 export default function Login() {
     const [email, setEmail] = useState('');
