@@ -37,6 +37,7 @@ export default function Applicant() {
     //         yellowNotices:"notics" ,
     //     }
     // };
+    
 
     useEffect(() => {
         // Only fetch data if 'id' is available
@@ -69,15 +70,36 @@ export default function Applicant() {
         console.log(applicantData);
     }
 
-    const handleAccept = () => {
-        // Implement logic to accept the applicant
-        console.log('Accepting applicant...');
-    };
-
-    const handleReject = () => {
-        // Implement logic to reject the applicant
-        console.log('Rejecting applicant...');
-    };
+    const updateVisaStatus = async (status) => {
+      try {
+          const response = await fetch(`http://localhost:4000/api/visa/${id}`, {
+              method: 'PATCH',
+              body: JSON.stringify({ visaStatus: status }),
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          });
+  
+          if (response.ok) {
+              console.log(`${status === 'approved' ? 'Accepted' : 'Rejected'} applicant successfully.`);
+          } else {
+              console.error(`Failed to update visa status. Error: ${response.statusText}`);
+          }
+      } catch (error) {
+          console.error('Error updating visa status:', error);
+      }
+  };
+  
+  const handleAccept = () => {
+      console.log('Accepting applicant...');
+      updateVisaStatus('approved');
+  };
+  
+  const handleReject = () => {
+      console.log('Rejecting applicant...');
+      updateVisaStatus('rejected');
+  };
+  
 
     return (
         <div className="flex h-screen bg-gray-100">
