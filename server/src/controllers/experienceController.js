@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const experienceService = require("../services/experiencesService");
 const userServices = require("../services/userServices");
+const {
+  findNearbyPlaces,
+  findNearbyHotelsByCoordinates,
+} = require("../utils/GoogleAPI");
 
 class ExperienceController {
   /**
@@ -102,6 +106,61 @@ class ExperienceController {
     } catch (error) {
       console.error(`Error fetching user experiences: ${error.message}`);
       res.status(400).json({ message: error.message });
+    }
+  }
+
+  /**
+   * Generate AI-powered experiences for a specific user based on location
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async createAIexperience(req, res) {
+    try {
+      // Destructure longitude, latitude, and userId from the request body
+      const { longitude, latitude, userId } = req.body;
+
+      // Validate required fields
+      if (!longitude || !latitude || !userId) {
+        console.error(
+          "Missing required fields: longitude, latitude, or userId"
+        );
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      // Fetch nearby places based on user's current location
+      const [nearbyPlaces, nearbyHotels] = await Promise.all([
+        findNearbyPlaces(longitude, latitude),
+        findNearbyHotelsByCoordinates(longitude, latitude),
+      ]);
+
+      if (!nearbyPlaces.length) {
+        console.warn("No nearby places found");
+        return res.status(404).json({ message: "No nearby places found" });
+      }
+
+      // Generate AI-based experience suggestions using the nearby places
+      const aiExperience = await experienceService.createExperience(
+        nearbyPlaces,
+        userId
+      );
+
+      if (!aiExperience) {
+        console.warn("AI experience generation failed");
+        return res
+          .status(500)
+          .json({ error: "Failed to generate AI experiences" });
+      }
+
+      // Log the nearby places and generated experiences for debugging
+      console.log("Nearby Places:", nearbyPlaces);
+      console.log("Generated AI Experience:", aiExperience);
+
+      // Send successful response with the generated AI experiences
+      return res.status(200).json({ aiExperience, nearbyHotels });
+    } catch (error) {
+      // Catch any unexpected errors and return a 500 status
+      console.error("Error generating AI experience:", error);
+      return res.status(500).json({ error: "Internal server error" });
     }
   }
 }
