@@ -1,4 +1,3 @@
-import langchain
 from fastapi import APIRouter
 from database.config import remote_mongodb
 from visaguard.biometrics import FaceExaminer
@@ -13,9 +12,6 @@ router = APIRouter(
 
 # Setup database connection
 db = remote_mongodb()
-
-# Set LangChain runtime configurations
-langchain.debug = True
 
 
 # --------------------------------
@@ -33,7 +29,7 @@ def test_router():
 
 # Match faces of uploaded photos
 @router.post("/check-faces/")
-def get_response(data: VisaDataModel):
+def check_faces(data: VisaDataModel):
     # Get image links from request body
     img1_link = data.img1_link
     img2_link = data.img2_link

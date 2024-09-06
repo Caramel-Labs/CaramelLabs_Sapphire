@@ -1,7 +1,12 @@
+import langchain
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from chat.routes import router as chat_router
 from visaguard.routes import router as visaguard_router
+from experiences.routes import router as experience_router
+
+# Set LangChain runtime configurations
+langchain.debug = False
 
 # Instantiate FastAPI application
 app = FastAPI(
@@ -12,6 +17,7 @@ app = FastAPI(
 # Setup routers
 app.include_router(chat_router)
 app.include_router(visaguard_router)
+app.include_router(experience_router)
 
 # Define allowed origins for CORS
 origins = [

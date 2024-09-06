@@ -1,4 +1,3 @@
-import langchain
 from fastapi import APIRouter
 from chat.payloads import ChatDataModel
 from database.config import remote_mongodb
@@ -12,9 +11,6 @@ router = APIRouter(
 
 # Setup database connection
 db = remote_mongodb()
-
-# Set LangChain runtime configurations
-langchain.debug = False
 
 
 # --------------------------------
@@ -31,7 +27,7 @@ def test_router():
 
 
 @router.post("/get-response/")
-def get_response(input: ChatDataModel):
+def get_response_from_chatbot(input: ChatDataModel):
     message = input.content
     agent = ToolBoundAgentBuilder()
     response = agent.invoke({"input": message})
