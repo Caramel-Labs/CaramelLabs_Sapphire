@@ -1,5 +1,5 @@
-import MenuItem from "@/app/components/profile/menuItem";
-import Link from "next/link";
+import MenuItem from '@/app/components/profile/menuItem';
+import Link from 'next/link';
 
 export default function Profile() {
     // Define the array of menu items
@@ -13,7 +13,6 @@ export default function Profile() {
 
     return (
         <div className="bg-gray-100 min-h-screen">
-
             {/* Profile header */}
             <div className="relative">
                 <img
@@ -32,15 +31,20 @@ export default function Profile() {
 
             {/* Profile info */}
             <div className="mt-20 text-center">
-                <h1 className="text-xl font-semibold text-gray-900">Saul Alejandro Pereira</h1>
+                <h1 className="text-xl font-semibold text-gray-900">
+                    Lasindu Ranasinghe
+                </h1>
                 <div className="relative flex items-center justify-center mt-1">
-                    <div className="absolute w-[100px] h-[36px] bg-gray-200 rounded-[12px] mt-4"></div> {/* Shadow behind */}
+                    <div className="absolute w-[100px] h-[36px] bg-gray-200 rounded-[12px] mt-4"></div>{' '}
+                    {/* Shadow behind */}
                     <img
-                        src="/images/portugalFlag.png" // Make sure this path points to the Portugal flag image
-                        alt="Portugal flag"
+                        src="/images/usa.webp" // Make sure this path points to the Portugal flag image
+                        alt="USA flag"
                         className="relative w-5 h-5 mr-2 mt-5"
                     />
-                    <span className="relative text-gray-600 text-xs mt-5">Portugal</span>
+                    <span className="relative text-gray-600 text-xs mt-5">
+                        USA
+                    </span>
                 </div>
             </div>
 
@@ -49,7 +53,11 @@ export default function Profile() {
                 {menuItems.map((item, index) => (
                     <Link key={index} href={item.route} passHref>
                         <div>
-                            <MenuItem icon={item.icon} text={item.text} isLast={item.isLast} />
+                            <MenuItem
+                                icon={item.icon}
+                                text={item.text}
+                                isLast={item.isLast}
+                            />
                         </div>
                     </Link>
                 ))}
