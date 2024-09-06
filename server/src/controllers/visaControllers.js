@@ -229,7 +229,7 @@ class VisaController {
       }
 
       // Validate that visaStatus is one of the allowed values
-      const validStatuses = ["valid", "inProgress", "rejected", "expired"];
+      const validStatuses = ["approved", "inProgress", "rejected", "expired"];
       if (!validStatuses.includes(visaStatus)) {
         return res.status(400).json({
           message: `Visa status must be one of: ${validStatuses.join(", ")}`,
