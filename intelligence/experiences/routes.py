@@ -31,11 +31,8 @@ def test_router():
 
 @router.post("/generate/")
 def generate_experience(request: PlaceList):
-    print("Controller invoked")
     # Get information sent over request body
     places = request.data
-
-    print(places)
 
     places_string = ""
     # Iterate through each place and build the string
