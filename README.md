@@ -1,6 +1,6 @@
 # Sapphire 🌴
 
-[Sapphire, the digital nomad's guide to Sri Lanka]("./sapphire.png")
+<img src="./sapphire.png" alt="Sapphire, the digital nomad's guide to Sri Lanka">
 
 This repository contains the code related to the **Sapphire** application.
 
