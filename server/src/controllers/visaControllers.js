@@ -220,7 +220,7 @@ class VisaController {
 
   async updateVisaStatus(req, res) {
     try {
-      const { id } = req.params;
+      const { userId } = req.params;
       const { visaStatus } = req.body;
 
       // Validate that visaStatus is provided
@@ -237,9 +237,9 @@ class VisaController {
       }
 
       // Find the visa document by ID and update its visaStatus
-      const updatedVisa = await Visa.findByIdAndUpdate(
-        id,
-        { visaStatus },
+      const updatedVisa = await Visa.findOneAndUpdate(
+        { user: userId }, // Query by user ID
+        { visaStatus }, // Update visaStatus field
         { new: true } // Return the updated document
       );
 

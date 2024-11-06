@@ -21,7 +21,7 @@ git clone https://github.com/Caramel-Labs/CaramelLabs_Sapphire.git
 Navigate into the cloned directory:
 
 ```shell
-cd loop
+cd CaramelLabs_Sapphire
 ```
 
 ### The Frontend (Mobile Web)
